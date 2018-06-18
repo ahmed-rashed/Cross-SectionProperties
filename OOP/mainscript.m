@@ -34,6 +34,7 @@ cA=cArea(sec1)
 rho_y=cA.rho_y
 rho_z=cA.rho_z
 Sy=cA.Sy(254e-3/2+7.7e-3)
+oobj=cA.cArea_alpha(pi/2)
 
 sec2=cCompCrossSec_ZSymm(cA_vec([1,2,4,5,6]),y_vec([1,2,4,5,6]),z_hat_vec([1,2,4,5,6]))
 sec2.A-sec1.A
