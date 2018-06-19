@@ -1,4 +1,4 @@
-classdef cArea
+classdef cArea < handle
     %This class takes:
     %*)propeties of the single cross-section (A-Iy-Iz-Iyz) from user.
     %then the class calculates the properties of the single cross-section.
@@ -56,9 +56,11 @@ classdef cArea
             h=pi/4-obj.alpha_1;
         end
         
-        function oobj=cArea_alpha(obj,alpha_rad)
+        function rotateAxes(obj,alpha_rad)
             temp_col=TransMatrix(alpha_rad)*[obj.Iy;obj.Iz;-obj.Iyz];
-            oobj=cArea(obj.A,temp_col(1),temp_col(2),temp_col(3));
+            obj.Iy=temp_col(1);
+            obj.Iz=temp_col(2);
+            obj.Iyz=temp_col(3);
         end
 
         function l= rho_y(obj)

@@ -1,7 +1,10 @@
 clc
 clear all
 
+%% Problem 1.2-e
 r1=rand;
+r2=randn;
+r3=randn;
 y1=203e-3/2+27.4e-3;
 z1=254e-3/2+7.7e-3-14.7e-3;
 z2=254e-3/2+7.7e-3-14.1e-3;
@@ -14,13 +17,13 @@ cA_vec=[cArea(1450e-6,0.278e-6,0.799e-6,r1)
     cArea(1450e-6,0.278e-6,0.799e-6,r1)];
 y_vec=[y1;0;-y1;0;y1;0;-y1];
 z_vec=[z1;z2;z1;0;-z1;-z2;-z1];
-y_hat_vec=[y1;0;-y1;0;y1;0;-y1]+randn;
-z_hat_vec=[z1;z2;z1;0;-z1;-z2;-z1]+randn;
+y_hat_vec=y_vec+r2;
+z_hat_vec=z_vec+r3;
 
 sec1=cCompCrossSec(cA_vec,y_hat_vec,z_hat_vec)
 A=sec1.A
-y_bar=sec1.y_bar
-z_bar=sec1.z_bar
+y_bar_error=sec1.y_bar-r2
+z_bar_error=sec1.z_bar-r3
 Iy_hat=sec1.Iy_hat
 Iz_hat=sec1.Iz_hat
 Iyz_hat=sec1.Iyz_hat
@@ -34,7 +37,8 @@ cA=cArea(sec1)
 rho_y=cA.rho_y
 rho_z=cA.rho_z
 Sy=cA.Sy(254e-3/2+7.7e-3)
-oobj=cA.cArea_alpha(pi/2)
+cA.rotateAxes(pi/2)
+cA
 
 sec2=cCompCrossSec_ZSymm(cA_vec([1,2,4,5,6]),y_vec([1,2,4,5,6]),z_hat_vec([1,2,4,5,6]))
 sec2.A-sec1.A
@@ -74,3 +78,4 @@ sec4.Iy-sec1.Iy
 sec4.Iz-sec1.Iz
 sec4.Iyz-sec1.Iyz
 sec4.I_p-sec1.I_p
+
