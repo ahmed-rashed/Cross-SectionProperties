@@ -40,8 +40,8 @@ classdef cCompCrossSec_YZSymm < cCompCrossSec
             if any(size(cArea_vec_quarter)~=size(z_vec_quarter)),error('C_Area_vec and z_vec_quarter must have the same lengths'),end
 
             %Determine the index of non bisected elements
-            ind_y_symm_vec=find((z_vec_quarter(:).'==0) & ([cArea_vec_quarter.Iyz]==0));
-            ind_z_symm_vec=find((y_vec_quarter(:).'==0) & ([cArea_vec_quarter.Iyz]==0));
+            ind_y_symm_vec=find(z_vec_quarter(:).'==0);
+            ind_z_symm_vec=find(y_vec_quarter(:).'==0);
             
             ind_y_symm_only_z_symm_only_vec=setxor(ind_y_symm_vec,ind_z_symm_vec);
             ind_non_symm_vec=setdiff(setdiff(1:length(cArea_vec_quarter),ind_y_symm_vec),ind_z_symm_vec);

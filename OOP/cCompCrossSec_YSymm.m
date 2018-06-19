@@ -32,7 +32,7 @@ classdef cCompCrossSec_YSymm < cCompCrossSec
             if any(size(cArea_vec_half)~=size(z_vec_half)),error('C_Area_vec and z_vec_half must have the same lengths'),end
 
             %Determine the index of non bisected elements
-            ind_vec=find(~((z_vec_half(:).'==0) & ([cArea_vec_half.Iyz]==0)));
+            ind_vec=find(~(z_vec_half(:).'==0));
 
             %Multiply the properties of non bisected elements by 2
             cArea_vec_temp=cArea_vec_half;
