@@ -1,9 +1,9 @@
 classdef cArea
     %This class takes:
-    %propeties of the single cross-section (A-Iy-Iz-Iyz) from user.
-    %then the class calculates the properties of the single cross-section.
+    %propeties of the single area (A-Iy-Iz-Iyz) from user.
+    %then the class calculates the properties of the single area.
     
-    % The attributes used to calcute the single cross-section properties
+    % The attributes used to calcute the single area properties
     properties
         A(1,1);
         Iy(1,1);
@@ -25,8 +25,8 @@ classdef cArea
                 oThisArea.Iy=varargin{1}.Iy;
                 oThisArea.Iz=varargin{1}.Iz;
                 oThisArea.Iyz=varargin{1}.Iyz;
-            else
-                error('This class can be constructed using one input or four inputs.');
+            elseif nargin ~= 0
+                error('This class can be constructed using zero, 1 or 4 inputs.');
             end
         end
 

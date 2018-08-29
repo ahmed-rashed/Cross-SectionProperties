@@ -1,5 +1,5 @@
-classdef cCompCrossSec_YSymm < cCompCrossSec
-    %This class takes only the upper or lower half of composite cross-section
+classdef cCompositeArea_YSymm < cCompositeArea
+    %This class takes only the upper or lower half of composite area
     
     properties
         cArea_vec_half;
@@ -27,7 +27,7 @@ classdef cCompCrossSec_YSymm < cCompCrossSec
     
     methods
         % Constructor
-        function obj = cCompCrossSec_YSymm(cArea_vec_half,y_hat_vec_half,z_vec_half)
+        function obj = cCompositeArea_YSymm (cArea_vec_half,y_hat_vec_half,z_vec_half)
             if any(size(cArea_vec_half)~=size(y_hat_vec_half)),error('cArea_vec_half and y_hat_vec_half must have the same lengths'),end
             if any(size(cArea_vec_half)~=size(z_vec_half)),error('C_Area_vec and z_vec_half must have the same lengths'),end
 
@@ -40,7 +40,7 @@ classdef cCompCrossSec_YSymm < cCompCrossSec
                 cArea_vec_temp(ii)=cArea(2*cArea_vec_half(ii).A,2*cArea_vec_half(ii).Iy,2*cArea_vec_half(ii).Iz,2*cArea_vec_half(ii).Iyz);
             end
             
-            obj=obj@cCompCrossSec(cArea_vec_temp,y_hat_vec_half,z_vec_half);
+            obj=obj@cCompositeArea(cArea_vec_temp,y_hat_vec_half,z_vec_half);
 
             obj.cArea_vec_half=cArea_vec_half(:).';
             obj.y_hat_vec_half=y_hat_vec_half(:).';

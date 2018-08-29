@@ -1,5 +1,5 @@
-classdef cCompCrossSec_YZSymm < cCompCrossSec
-    %This class takes only quarter the composite cross-section
+classdef cCompositeArea_YZSymm < cCompositeArea
+    %This class takes only quarter the composite area
     
     properties
         cArea_vec_quarter;
@@ -35,7 +35,7 @@ classdef cCompCrossSec_YZSymm < cCompCrossSec
     
     methods
         % Constructor
-        function obj = cCompCrossSec_YZSymm(cArea_vec_quarter,y_vec_quarter,z_vec_quarter)
+        function obj = cCompositeArea_YZSymm(cArea_vec_quarter,y_vec_quarter,z_vec_quarter)
             if any(size(cArea_vec_quarter)~=size(y_vec_quarter)),error('cArea_vec_quarter and y_vec_quarter must have the same lengths'),end
             if any(size(cArea_vec_quarter)~=size(z_vec_quarter)),error('C_Area_vec and z_vec_quarter must have the same lengths'),end
 
@@ -54,7 +54,7 @@ classdef cCompCrossSec_YZSymm < cCompCrossSec
                 cArea_vec_temp(ii)=cArea(4*cArea_vec_quarter(ii).A,4*cArea_vec_quarter(ii).Iy,4*cArea_vec_quarter(ii).Iz,2*cArea_vec_quarter(ii).Iyz);
             end
 
-            obj=obj@cCompCrossSec(cArea_vec_temp,y_vec_quarter,z_vec_quarter);
+            obj=obj@cCompositeArea(cArea_vec_temp,y_vec_quarter,z_vec_quarter);
 
             obj.cArea_vec_quarter=cArea_vec_quarter(:).';
             obj.y_vec_quarter=y_vec_quarter(:).';

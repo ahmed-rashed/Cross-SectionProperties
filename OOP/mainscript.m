@@ -21,7 +21,7 @@ z_vec=[z1;z2;z1;0;-z1;-z2;-z1];
 y_hat_vec=y_vec+r2;
 z_hat_vec=z_vec+r3;
 
-oSec1=cCompCrossSec(oA_vec,y_hat_vec,z_hat_vec)
+oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec)
 A=oSec1.A
 y_bar_error=oSec1.y_bar-r2
 z_bar_error=oSec1.z_bar-r3
@@ -40,7 +40,7 @@ rho_z=oA.rho_z
 Sy=oA.Sy(254e-3/2+7.7e-3)
 oA=oA.rotatedArea(pi/2)
 
-oSec2=cCompCrossSec_ZSymm(oA_vec([1,2,4,5,6]),y_vec([1,2,4,5,6]),z_hat_vec([1,2,4,5,6]))
+oSec2=cCompositeArea_ZSymm (oA_vec([1,2,4,5,6]),y_vec([1,2,4,5,6]),z_hat_vec([1,2,4,5,6]))
 oSec2.A-oSec1.A
 %oSec2.y_bar-oSec1.y_bar
 oSec2.z_bar-oSec1.z_bar
@@ -53,7 +53,7 @@ oSec2.Iz-oSec1.Iz
 oSec2.Iyz-oSec1.Iyz
 oSec2.I_p-oSec1.I_p
 
-oSec3=cCompCrossSec_YSymm(oA_vec(1:4),y_hat_vec(1:4),z_vec(1:4))
+oSec3=cCompositeArea_YSymm (oA_vec(1:4),y_hat_vec(1:4),z_vec(1:4))
 oSec3.A-oSec1.A
 oSec3.y_bar-oSec1.y_bar
 % oSec3.z_bar-oSec1.z_bar
@@ -66,7 +66,7 @@ oSec3.Iz-oSec1.Iz
 oSec3.Iyz-oSec1.Iyz
 oSec3.I_p-oSec1.I_p
 
-oSec4=cCompCrossSec_YZSymm(oA_vec([1,2,4]),y_vec([1,2,4]),z_vec([1,2,4]))
+oSec4=cCompositeArea_YZSymm(oA_vec([1,2,4]),y_vec([1,2,4]),z_vec([1,2,4]))
 oSec4.A-oSec1.A
 % oSec4.y_bar-oSec1.y_bar
 % oSec4.z_bar-oSec1.z_bar
@@ -87,7 +87,7 @@ cA_vec_half=[cArea(2610e-6,0.633e-6,15e-6,0)
 y_hat_vec_half=[0;y1];
 z_vec_half=[z1;0];
 
-oSec1=cCompCrossSec_YSymm(cA_vec_half,y_hat_vec_half,z_vec_half)
+oSec1=cCompositeArea_YSymm (cA_vec_half,y_hat_vec_half,z_vec_half)
 A=oSec1.A
 y_bar=oSec1.y_bar
 z_bar=oSec1.z_bar

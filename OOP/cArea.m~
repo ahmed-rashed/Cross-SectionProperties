@@ -1,9 +1,9 @@
 classdef cArea < handle
     %This class takes:
-    %propeties of the single cross-section (A-Iy-Iz-Iyz) from user.
-    %then the class calculates the properties of the single cross-section.
+    %propeties of the single area (A-Iy-Iz-Iyz) from user.
+    %then the class calculates the properties of the single area.
     
-    % The attributes used to calcute the single cross-section properties
+    % The attributes used to calcute the single area properties
     properties
         A(1,1);
         Iy(1,1);
