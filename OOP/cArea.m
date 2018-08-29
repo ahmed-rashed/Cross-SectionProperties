@@ -1,4 +1,4 @@
-classdef cArea < handle
+classdef cArea
     %This class takes:
     %propeties of the single cross-section (A-Iy-Iz-Iyz) from user.
     %then the class calculates the properties of the single cross-section.
@@ -75,11 +75,9 @@ classdef cArea < handle
             mm=oThisArea.Iz/abs(y_max);
         end
         
-        function rotateAxes(oThisArea,alpha_rad)
-            temp_col=TransMatrix(alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
-            oThisArea.Iy=temp_col(1);
-            oThisArea.Iz=temp_col(2);
-            oThisArea.Iyz=temp_col(3);
+        function oNewArea=rotatedArea(oThisArea,alpha_rad)
+            temp_col=TransMatrix(-alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
+            oNewArea=cArea(oThisArea.A,temp_col(1),temp_col(2),temp_col(3));
         end
     end
 end

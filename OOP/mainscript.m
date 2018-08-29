@@ -38,8 +38,7 @@ oA=cArea(oSec1)
 rho_y=oA.rho_y
 rho_z=oA.rho_z
 Sy=oA.Sy(254e-3/2+7.7e-3)
-oA.rotateAxes(pi/2)
-oA
+oA=oA.rotatedArea(pi/2)
 
 oSec2=cCompCrossSec_ZSymm(oA_vec([1,2,4,5,6]),y_vec([1,2,4,5,6]),z_hat_vec([1,2,4,5,6]))
 oSec2.A-oSec1.A

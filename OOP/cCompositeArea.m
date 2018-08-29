@@ -1,4 +1,4 @@
-classdef cCompCrossSec
+classdef cCompositeArea
     % The attributes used to calculate the composite cross-section
     
     properties
