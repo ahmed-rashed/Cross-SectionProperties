@@ -2,35 +2,35 @@ classdef cCompCrossSec
     % The attributes used to calculate the composite cross-section
     
     properties
-        cArea_vec;
-        y_hat_vec;
-        z_hat_vec;
+        oArea_vec(1,:) cArea;   %row vector
+        y_hat_vec(1,:);         %row vector
+        z_hat_vec(1,:);         %row vector
     end
     
     methods
         % Constructor
-        function obj = cCompCrossSec(cArea_vec,y_hat_vec,z_hat_vec)
+        function obj = cCompCrossSec(oArea_vec,y_hat_vec,z_hat_vec)
             if nargin == 3
-                if any(size(cArea_vec)~=size(y_hat_vec)),error('cArea_vec and y_hat_vec must have the same lengths'),end
-                if any(size(cArea_vec)~=size(z_hat_vec)),error('C_Area_vec and z_hat_vec must have the same lengths'),end
+                if any(size(oArea_vec)~=size(y_hat_vec)),error('oArea_vec and y_hat_vec must have the same lengths'),end
+                if any(size(oArea_vec)~=size(z_hat_vec)),error('C_Area_vec and z_hat_vec must have the same lengths'),end
 
                 %Assign subclass properties
-                obj.cArea_vec=cArea_vec(:).';
-                obj.y_hat_vec=y_hat_vec(:).';
-                obj.z_hat_vec=z_hat_vec(:).';
+                obj.oArea_vec=oArea_vec;
+                obj.y_hat_vec=y_hat_vec;
+                obj.z_hat_vec=z_hat_vec;
             end
         end
         
         function A=A(obj)
-            A=sum([obj.cArea_vec.A]);
+            A=sum([obj.oArea_vec.A]);
         end
         
         function Qy=Qy(obj)
-            Qy=sum([obj.cArea_vec.A].*obj.z_hat_vec);
+            Qy=sum([obj.oArea_vec.A].*obj.z_hat_vec);
         end
         
         function Qz=Qz(obj)
-            Qz=sum([obj.cArea_vec.A].*obj.y_hat_vec);
+            Qz=sum([obj.oArea_vec.A].*obj.y_hat_vec);
         end
         
         function d=y_bar(obj)
@@ -42,15 +42,15 @@ classdef cCompCrossSec
         end
         
         function f=Iy_hat(obj)
-            f=sum([obj.cArea_vec.Iy])+sum([obj.cArea_vec.A].*obj.z_hat_vec.^2);
+            f=sum([obj.oArea_vec.Iy])+sum([obj.oArea_vec.A].*obj.z_hat_vec.^2);
         end
         
         function g=Iz_hat(obj)
-            g=sum([obj.cArea_vec.Iz])+sum([obj.cArea_vec.A].*obj.y_hat_vec.^2);
+            g=sum([obj.oArea_vec.Iz])+sum([obj.oArea_vec.A].*obj.y_hat_vec.^2);
         end
         
         function k=Iyz_hat(obj)
-            k=sum([obj.cArea_vec.Iyz])+sum([obj.cArea_vec.A].*obj.y_hat_vec.*obj.z_hat_vec);
+            k=sum([obj.oArea_vec.Iyz])+sum([obj.oArea_vec.A].*obj.y_hat_vec.*obj.z_hat_vec);
         end
         
         function h=I_p_hat(obj)

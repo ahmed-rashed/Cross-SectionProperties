@@ -13,20 +13,18 @@ classdef cArea < handle
     
     methods 
         % Constructor
-        function oThisArea = cArea(varargin)
-            if nargin == 4
-                oThisArea.A=varargin{1};
-                oThisArea.Iy=varargin{2};
-                oThisArea.Iz=varargin{3};
-                oThisArea.Iyz=varargin{4};
-            elseif nargin == 1
-                % This case assumes that the A input argument is an  object.
-                oThisArea.A=varargin{1}.A;
-                oThisArea.Iy=varargin{1}.Iy;
-                oThisArea.Iz=varargin{1}.Iz;
-                oThisArea.Iyz=varargin{1}.Iyz;
-            else
-                error('This class can be constructed using one input or four inputs.');
+        function oThisArea = cArea(A,Iy,Iz,Iyz)
+            if nargin == 1
+                %
+                oThisArea.A=A.A;
+                oThisArea.Iy=A.Iy;
+                oThisArea.Iz=A.Iz;
+                oThisArea.Iyz=A.Iyz;
+            elseif nargin == 4
+                oThisArea.A=A;
+                oThisArea.Iy=Iy;
+                oThisArea.Iz=Iz;
+                oThisArea.Iyz=Iyz;
             end
         end
 
@@ -59,6 +57,13 @@ classdef cArea < handle
             h=pi/4-oThisArea.alpha_1;
         end
         
+        function rotateAxes(oThisArea,alpha_rad)
+            temp_col=TransMatrix(alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
+            oThisArea.Iy=temp_col(1);
+            oThisArea.Iz=temp_col(2);
+            oThisArea.Iyz=temp_col(3);
+        end
+
         function l= rho_y(oThisArea)
             l=sqrt(oThisArea.Iy/oThisArea.A);
         end
@@ -74,13 +79,7 @@ classdef cArea < handle
         function mm= Sz(oThisArea,y_max)
             mm=oThisArea.Iz/abs(y_max);
         end
-        
-        function rotateAxes(oThisArea,alpha_rad)
-            temp_col=TransMatrix(alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
-            oThisArea.Iy=temp_col(1);
-            oThisArea.Iz=temp_col(2);
-            oThisArea.Iyz=temp_col(3);
-        end
     end
+        
 end
 
