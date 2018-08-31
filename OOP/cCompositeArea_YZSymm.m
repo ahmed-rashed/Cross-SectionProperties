@@ -73,16 +73,17 @@ classdef cCompositeArea_YZSymm < cCompositeArea
             l=oThisCompositeArea_YZSymm.I_p_hat;
         end
         
-        function cArea_vec_quarter=get_cArea_vec_quarter(oThisCompositeArea_YZSymm)
+        function oArea_vec_quarter=get_oArea_vec(oThisCompositeArea_YZSymm)
             %Divide the properties of super class non bisected elements by 2
-            cArea_vec_quarter=oThisCompositeArea_YZSymm.oArea_vec;
+            %cArea_vec_quarter=oThisCompositeArea_YZSymm.oArea_vec;
+            oArea_vec_quarter=get_oArea_vec@cCompositeArea(oThisCompositeArea_YZSymm);
             for ii=oThisCompositeArea_YZSymm.ind_y_symm_only_z_symm_only_vec
-                cArea_vec_quarter(ii)=cArea(cArea_vec_quarter(ii).A/2,cArea_vec_quarter(ii).Iy/2,cArea_vec_quarter(ii).Iz/2,cArea_vec_quarter(ii).Iyz/2);
+                oArea_vec_quarter(ii)=cArea(oArea_vec_quarter(ii).A/2,oArea_vec_quarter(ii).Iy/2,oArea_vec_quarter(ii).Iz/2,oArea_vec_quarter(ii).Iyz/2);
             end
             
             %Divide the properties of super class non bisected elements by 4
             for ii=oThisCompositeArea_YZSymm.ind_non_symm_vec
-                cArea_vec_quarter(ii)=cArea(cArea_vec_quarter(ii).A/4,cArea_vec_quarter(ii).Iy/4,cArea_vec_quarter(ii).Iz/4,cArea_vec_quarter(ii).Iyz/4);
+                oArea_vec_quarter(ii)=cArea(oArea_vec_quarter(ii).A/4,oArea_vec_quarter(ii).Iy/4,oArea_vec_quarter(ii).Iz/4,oArea_vec_quarter(ii).Iyz/4);
             end
 
         end

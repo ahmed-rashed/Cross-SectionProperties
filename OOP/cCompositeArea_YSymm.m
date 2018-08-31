@@ -42,7 +42,7 @@ classdef cCompositeArea_YSymm < cCompositeArea
             oThisCompositeArea_YSymm@cCompositeArea(oArea_vec_temp,y_hat_vec_half,z_vec_half);
 
             %Construct the sub class
-            oThisCompositeArea_ZSymm.ind_vec=ind_vec;
+            oThisCompositeArea_YSymm.ind_vec=ind_vec;
         end
 
         function p=Iy(oThisCompositeArea_YSymm)
@@ -52,10 +52,11 @@ classdef cCompositeArea_YSymm < cCompositeArea
         function l=I_p(oThisCompositeArea_YSymm)
             l=Iy(oThisCompositeArea_YSymm)+Iz(oThisCompositeArea_YSymm);
         end
-        function oArea_vec_half=get_oArea_vec_half(oThisCompositeArea_ZSymm)
+        function oArea_vec_half=get_oArea_vec(oThisCompositeArea_YSymm)
             %Divide the properties of super class non bisected elements by 2
-            oArea_vec_half=oThisCompositeArea_ZSymm.oArea_vec;
-            for ii=oThisCompositeArea_ZSymm.ind_vec
+            %oArea_vec_half=oThisCompositeArea_YSymm.oArea_vec;
+            oArea_vec_half=get_oArea_vec@cCompositeArea(oThisCompositeArea_YSymm);
+            for ii=oThisCompositeArea_YSymm.ind_vec
                 oArea_vec_half(ii)=cArea(oArea_vec_half(ii).A/2,oArea_vec_half(ii).Iy/2,oArea_vec_half(ii).Iz/2,oArea_vec_half(ii).Iyz/2);
             end
         end

@@ -1,7 +1,7 @@
 classdef cCompositeArea
     % The attributes used to calculate the composite area
     
-    properties
+    properties (Access = protected)
         oArea_vec(1,:) cArea;   %row vector
         y_hat_vec(1,:);         %row vector
         z_hat_vec(1,:);         %row vector
@@ -21,6 +21,18 @@ classdef cCompositeArea
             elseif nargin ~= 0
                 error('This class can be constructed using zero or 3 inputs.');
             end
+        end
+        
+        function oArea_vec=get_oArea_vec(oThisCompositeArea)
+            oArea_vec=oThisCompositeArea.oArea_vec;
+        end
+        
+        function y_hat_vec=get_y_hat_vec(oThisCompositeArea)
+            y_hat_vec=oThisCompositeArea.y_hat_vec;
+        end
+        
+        function z_hat_vec=get_z_hat_vec(oThisCompositeArea)
+            z_hat_vec=oThisCompositeArea.z_hat_vec;
         end
         
         function A=A(oThisCompositeArea)

@@ -61,9 +61,10 @@ classdef cCompositeArea_AntiSymm_YSymm < cCompositeArea
             q=oThisCompositeArea_AntiSymm_YSymm.Iyz_hat;
         end
 
-        function oArea_vec_half=get_oArea_vec_half(oThisCompositeArea_AntiSymm_YSymm)
+        function oArea_vec_half=get_oArea_vec(oThisCompositeArea_AntiSymm_YSymm)
             %Divide the properties of super class non bisected elements by 2
-            oArea_vec_half=oThisCompositeArea_AntiSymm_YSymm.oArea_vec;
+            %oArea_vec_half=oThisCompositeArea_AntiSymm_YSymm.oArea_vec;
+            oArea_vec_half=get_oArea_vec@cCompositeArea(oThisCompositeArea_AntiSymm_YSymm);
             for ii=oThisCompositeArea_AntiSymm_YSymm.ind_vec
                 oArea_vec_half(ii)=cArea(oArea_vec_half(ii).A/2,oArea_vec_half(ii).Iy/2,oArea_vec_half(ii).Iz/2,oArea_vec_half(ii).Iyz/2);
             end

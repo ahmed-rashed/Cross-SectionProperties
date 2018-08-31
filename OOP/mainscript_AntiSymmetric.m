@@ -24,25 +24,17 @@ z_vec=[z1;0;-z1];
 y_hat_vec=y_vec+r1;
 z_hat_vec=z_vec+r2;
 
+%Full section
 oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec)
-A=oSec1.A
 y_bar_error=oSec1.y_bar-r1
 z_bar_error=oSec1.z_bar-r2
-Iy_hat=oSec1.Iy_hat
-Iz_hat=oSec1.Iz_hat
-Iyz_hat=oSec1.Iyz_hat
-I_p_hat=oSec1.I_p_hat
-Iy=oSec1.Iy
-Iz=oSec1.Iz
-Iyz=oSec1.Iyz
-I_p=oSec1.I_p
-cA=cArea(oSec1)
-rho_y=cA.rho_y
-rho_z=cA.rho_z
-Sy=cA.Sy(300)
-Sz=cA.Sz(350)
 
-oSec2=cCompositeArea_AntiSymm_ZSymm(oA_vec([1,2]),y_vec([1,2]),z_vec([1,2]))
+%AntiSymm_ZSymm
+iindex=[1,2];
+oArea_vec_half=oA_vec(iindex);
+y_vec_half=y_vec(iindex);
+z_vec_half=z_vec(iindex);
+oSec2=cCompositeArea_AntiSymm_ZSymm(oArea_vec_half,y_vec_half,z_vec_half)
 oSec2.A-oSec1.A
 %oSec2.y_bar-oSec1.y_bar
 %oSec2.z_bar-oSec1.z_bar
@@ -54,8 +46,17 @@ oSec2.Iy-oSec1.Iy
 oSec2.Iz-oSec1.Iz
 oSec2.Iyz-oSec1.Iyz
 oSec2.I_p-oSec1.I_p
+[oSec2.get_oArea_vec.A]-[oArea_vec_half.A]
+[oSec2.get_oArea_vec.Iy]-[oArea_vec_half.Iy]
+[oSec2.get_oArea_vec.Iz]-[oArea_vec_half.Iz]
+[oSec2.get_oArea_vec.Iyz]-[oArea_vec_half.Iyz]
 
-oSec3=cCompositeArea_AntiSymm_YSymm(oA_vec([1,2]),y_vec([1,2]),z_vec([1,2]))
+%AntiSymm_YSymm
+iindex=[1,2];
+oArea_vec_half=oA_vec(iindex);
+y_vec_half=y_vec(iindex);
+z_vec_half=z_vec(iindex);
+oSec3=cCompositeArea_AntiSymm_YSymm(oArea_vec_half,y_vec_half,z_vec_half)
 oSec3.A-oSec1.A
 %oSec3.y_bar-oSec1.y_bar
 % oSec3.z_bar-oSec1.z_bar
@@ -67,6 +68,10 @@ oSec3.Iy-oSec1.Iy
 oSec3.Iz-oSec1.Iz
 oSec3.Iyz-oSec1.Iyz
 oSec3.I_p-oSec1.I_p
+[oSec3.get_oArea_vec.A]-[oArea_vec_half.A]
+[oSec3.get_oArea_vec.Iy]-[oArea_vec_half.Iy]
+[oSec3.get_oArea_vec.Iz]-[oArea_vec_half.Iz]
+[oSec3.get_oArea_vec.Iyz]-[oArea_vec_half.Iyz]
 
 %% Problem 1.2-e
 r1=rand;
@@ -86,17 +91,8 @@ y_hat_vec=y_vec+r2;
 z_hat_vec=z_vec+r3;
 
 oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec)
-A=oSec1.A
 y_bar_error=oSec1.y_bar-r2
 z_bar_error=oSec1.z_bar-r3
-Iy_hat=oSec1.Iy_hat
-Iz_hat=oSec1.Iz_hat
-Iyz_hat=oSec1.Iyz_hat
-I_p_hat=oSec1.I_p_hat
-Iy=oSec1.Iy
-Iz=oSec1.Iz
-Iyz=oSec1.Iyz
-I_p=oSec1.I_p
 
 oSec2=cCompositeArea_AntiSymm_YSymm(oA_vec(1:3),y_vec(1:3),z_vec(1:3))
 oSec2.A-oSec1.A
