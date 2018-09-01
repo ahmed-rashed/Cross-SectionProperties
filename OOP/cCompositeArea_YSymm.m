@@ -26,8 +26,8 @@ classdef cCompositeArea_YSymm < cCompositeArea
     methods
         % Subclass constructor
         function oThisCompositeArea_YSymm = cCompositeArea_YSymm (oArea_vec_half,y_hat_vec_half,z_vec_half)
-            if length(oArea_vec_half)~=length(y_hat_vec_half),error('oArea_vec_half and y_hat_vec_half must have the same lengths'),end
-            if length(oArea_vec_half)~=length(z_vec_half),error('C_Area_vec and z_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(y_hat_vec_half),error('oArea_vec_half, y_vec_half and z_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(z_vec_half),error('oArea_vec_half, y_vec_half and z_vec_half must have the same lengths'),end
 
             %Determine the index of non bisected elements
             ind_vec=find(~((z_vec_half(:).'==0) & ([oArea_vec_half.Iyz]==0)));
@@ -50,7 +50,7 @@ classdef cCompositeArea_YSymm < cCompositeArea
         end
                 
         function l=I_p(oThisCompositeArea_YSymm)
-            l=Iy(oThisCompositeArea_YSymm)+Iz(oThisCompositeArea_YSymm);
+            l=oThisCompositeArea_YSymm.Iy+oThisCompositeArea_YSymm.Iz;
         end
         function oArea_vec_half=get_oArea_vec(oThisCompositeArea_YSymm)
             %Divide the properties of super class non bisected elements by 2

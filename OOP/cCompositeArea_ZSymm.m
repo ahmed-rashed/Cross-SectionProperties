@@ -26,8 +26,8 @@ classdef cCompositeArea_ZSymm  < cCompositeArea
     methods
         % Subclass constructor
         function oThisCompositeArea_ZSymm = cCompositeArea_ZSymm (oArea_vec_half,y_vec_half,z_hat_vec_half)
-            if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half and y_vec_half must have the same lengths'),end
-            if length(oArea_vec_half)~=length(z_hat_vec_half),error('C_Area_vec and z_hat_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half, y_vec_half and z_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(z_hat_vec_half),error('oArea_vec_half, y_vec_half and z_vec_half must have the same lengths'),end
 
             %Determine the index of non bisected elements
             ind_vec=find(~((y_vec_half(:).'==0) & ([oArea_vec_half.Iyz]==0)));
@@ -50,7 +50,7 @@ classdef cCompositeArea_ZSymm  < cCompositeArea
         end
                 
         function l=I_p(oThisCompositeArea_ZSymm)
-            l=Iy(oThisCompositeArea_ZSymm)+Iz(oThisCompositeArea_ZSymm);
+            l=oThisCompositeArea_ZSymm.Iy+oThisCompositeArea_ZSymm.Iz;
         end
         
         function oArea_vec_half=get_oArea_vec(oThisCompositeArea_ZSymm)

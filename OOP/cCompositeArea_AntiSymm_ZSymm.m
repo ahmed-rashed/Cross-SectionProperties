@@ -26,8 +26,8 @@ classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
     methods
         % Subclass constructor
         function oThisCompositeArea_AntiSymm_ZSymm = cCompositeArea_AntiSymm_ZSymm(oArea_vec_half,y_vec_half,z_vec_half)
-            if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half and y_vec_half must have the same lengths'),end
-            if length(oArea_vec_half)~=length(z_vec_half),error('C_Area_vec and z_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
+            if length(oArea_vec_half)~=length(z_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
 
             %Determine the index of non bisected elements
             ind_vec=find(~(y_vec_half(:).'==0));
