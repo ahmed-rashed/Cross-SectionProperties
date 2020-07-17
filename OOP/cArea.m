@@ -1,9 +1,7 @@
 classdef cArea
-    %This class takes:
-    %propeties of the single area (A-Iy-Iz-Iyz) from user.
-    %then the class calculates the properties of the single area.
+    %This class takes the propeties of an area (A,Iy,Iz,Iyz), and calculates the properties of this area.
     
-    % The attributes used to calcute the single area properties
+    % The attributes used to calcute the area properties
     properties
         A(1,1);
         Iy(1,1);
@@ -13,66 +11,63 @@ classdef cArea
     
     methods 
         % Constructor
-        function oThisArea = cArea(varargin)
-            if nargin == 4
-                oThisArea.A=varargin{1};
-                oThisArea.Iy=varargin{2};
-                oThisArea.Iz=varargin{3};
-                oThisArea.Iyz=varargin{4};
-            elseif nargin == 1
-                % This case assumes that the A input argument is an  object.
-                oThisArea.A=varargin{1}.A;
-                oThisArea.Iy=varargin{1}.Iy;
-                oThisArea.Iz=varargin{1}.Iz;
-                oThisArea.Iyz=varargin{1}.Iyz;
+        function oThisArea = cArea(A,Iy,Iz,Iyz)
+            if nargin==4
+                oThisArea.A=A;
+                oThisArea.Iy=Iy;
+                oThisArea.Iz=Iz;
+                oThisArea.Iyz=Iyz;
             elseif nargin ~= 0
-                error('This class can be constructed using zero, 1 or 4 inputs.');
+                error('This class can be constructed using zero or 4 inputs.');
             end
         end
 
-        % The calculations of the properties             
-        function a=alpha_1(oThisArea)
-            a=atan2(-oThisArea.Iyz,(oThisArea.Iy-oThisArea.Iz)/2);
+        function I_p=I_p(oThisArea)
+            I_p=oThisArea.Iy+oThisArea.Iz;
         end
         
-        function b=I_34(oThisArea)
-            b=sqrt(((oThisArea.Iy-oThisArea.Iz)/2)^2+(-oThisArea.Iyz)^2);
+        function alpha_1=alpha_1(oThisArea)
+            alpha_1=atan2(-oThisArea.Iyz,(oThisArea.Iy-oThisArea.Iz)/2);
         end
         
-        function c=I_3(oThisArea)
-            c=(oThisArea.Iy+oThisArea.Iz)/2;
+        function I_34=I_34(oThisArea)
+            I_34=sqrt(((oThisArea.Iy-oThisArea.Iz)/2)^2+(-oThisArea.Iyz)^2);
         end
         
-        function d=I_4(oThisArea)
-            d=I_3(oThisArea);
+        function I_3=I_3(oThisArea)
+            I_3=(oThisArea.Iy+oThisArea.Iz)/2;
         end
         
-        function e=I_1(oThisArea)
-            e=oThisArea.I_3+oThisArea.I_34;
+        function I_4=I_4(oThisArea)
+            I_4=oThisArea.I_3;
         end
         
-        function f=I_2(oThisArea)
-            f=oThisArea.I_3-oThisArea.I_34;
+        function I_1=I_1(oThisArea)
+            I_1=oThisArea.I_3+oThisArea.I_34;
         end
         
-        function h=alpha_3(oThisArea)
-            h=pi/4-oThisArea.alpha_1;
+        function I_2=I_2(oThisArea)
+            I_2=oThisArea.I_3-oThisArea.I_34;
         end
         
-        function l= rho_y(oThisArea)
-            l=sqrt(oThisArea.Iy/oThisArea.A);
+        function alpha_3=alpha_3(oThisArea)
+            alpha_3=pi/4-oThisArea.alpha_1;
         end
         
-        function m= rho_z(oThisArea)
-            m=sqrt(oThisArea.Iz/oThisArea.A);
+        function rho_y=rho_y(oThisArea)
+            rho_y=sqrt(oThisArea.Iy/oThisArea.A);
+        end
+        
+        function rho_z=rho_z(oThisArea)
+            rho_z=sqrt(oThisArea.Iz/oThisArea.A);
         end
 
-        function mm= Sy(oThisArea,z_max)
-            mm=oThisArea.Iy/abs(z_max);
+        function Sy=Sy(oThisArea,z_max)
+            Sy=oThisArea.Iy/abs(z_max);
         end
 
-        function mm= Sz(oThisArea,y_max)
-            mm=oThisArea.Iz/abs(y_max);
+        function Sz=Sz(oThisArea,y_max)
+            Sz=oThisArea.Iz/abs(y_max);
         end
         
         function oNewArea=rotatedArea(oThisArea,alpha_rad)
@@ -81,4 +76,3 @@ classdef cArea
         end
     end
 end
-

@@ -6,32 +6,6 @@ classdef cCompositeArea_YZSymm < cCompositeArea
         ind_non_symm_vec
     end
 
-    methods(Static)
-        function d=Qy(~)
-            d=0;
-        end
-        
-        function d=Qz(~)
-            d=0;
-        end
-        
-        function f=y_bar(~)
-            f=0;
-        end
-
-        function f=z_bar(~)
-            f=0;
-        end
-        
-        function m=Iyz_hat(~)
-            m=0;
-        end
-        
-        function q=Iyz(~)
-            q=0;
-        end
-    end
-    
     methods
         % Subclass constructor
         function oThisCompositeArea_YZSymm = cCompositeArea_YZSymm(oArea_vec_quarter,y_vec_quarter,z_vec_quarter)
@@ -62,6 +36,11 @@ classdef cCompositeArea_YZSymm < cCompositeArea
 
             %Construct the super class
             oThisCompositeArea_YZSymm@cCompositeArea(superClass1Args{:});
+            oThisCompositeArea_YZSymm.Iy=oThisCompositeArea_YZSymm.Iy_hat;
+            oThisCompositeArea_YZSymm.Iz=oThisCompositeArea_YZSymm.Iz_hat;
+            oThisCompositeArea_YZSymm.Iyz=0;
+            oThisCompositeArea_YZSymm.y_bar=0;
+            oThisCompositeArea_YZSymm.z_bar=0;
 
             if nargin == 3
                 %Construct the sub class
@@ -70,18 +49,6 @@ classdef cCompositeArea_YZSymm < cCompositeArea
             end
         end
 
-        function p=Iy(oThisCompositeArea_YZSymm)
-            p=oThisCompositeArea_YZSymm.Iy_hat;
-        end
-
-        function p=Iz(oThisCompositeArea_YZSymm)
-            p=oThisCompositeArea_YZSymm.Iz_hat;
-        end
-
-        function l=I_p(oThisCompositeArea_YZSymm)
-            l=oThisCompositeArea_YZSymm.I_p_hat;
-        end
-        
         function oArea_vec_quarter=get_oArea_vec(oThisCompositeArea_YZSymm)
             %Divide the properties of super class non bisected elements by 2
             %oArea_vec_quarter=oThisCompositeArea_YZSymm.oArea_vec;
@@ -94,7 +61,6 @@ classdef cCompositeArea_YZSymm < cCompositeArea
             for ii=oThisCompositeArea_YZSymm.ind_non_symm_vec
                 oArea_vec_quarter(ii)=cArea(oArea_vec_quarter(ii).A/4,oArea_vec_quarter(ii).Iy/4,oArea_vec_quarter(ii).Iz/4,oArea_vec_quarter(ii).Iyz/4);
             end
-
         end
     end
 end

@@ -4,24 +4,6 @@ classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
     properties (Access = private)
 		ind_vec
     end
-
-    methods(Static)
-        function d=Qz(~)
-            d=0;
-        end
-
-        function d=Qy(~)
-            d=0;
-        end
-        
-        function f=y_bar(~)
-            f=0;
-        end
-
-        function f=z_bar(~)
-            f=0;
-        end
-    end
     
     methods
         % Subclass constructor
@@ -47,27 +29,16 @@ classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
 
             %Construct the super class
             oThisCompositeArea_AntiSymm_ZSymm@cCompositeArea(superClass1Args{:});
-
+            oThisCompositeArea_AntiSymm_ZSymm.Iy=oThisCompositeArea_AntiSymm_ZSymm.Iy_hat;
+            oThisCompositeArea_AntiSymm_ZSymm.Iz=oThisCompositeArea_AntiSymm_ZSymm.Iz_hat;
+            oThisCompositeArea_AntiSymm_ZSymm.Iyz=oThisCompositeArea_AntiSymm_ZSymm.Iyz_hat;
+            oThisCompositeArea_AntiSymm_ZSymm.y_bar=0;
+            oThisCompositeArea_AntiSymm_ZSymm.z_bar=0;
+            
             if nargin == 3
                 %Construct the sub class
                 oThisCompositeArea_AntiSymm_ZSymm.ind_vec=ind_vec;
             end
-        end
-
-        function p=Iz(oThisCompositeArea_AntiSymm_ZSymm)
-            p=oThisCompositeArea_AntiSymm_ZSymm.Iz_hat;
-        end
-
-        function p=Iy(oThisCompositeArea_AntiSymm_ZSymm)
-            p=oThisCompositeArea_AntiSymm_ZSymm.Iy_hat;
-        end
-        
-        function l=I_p(oThisCompositeArea_AntiSymm_ZSymm)
-            l=oThisCompositeArea_AntiSymm_ZSymm.I_p_hat;
-        end
-        
-        function q=Iyz(oThisCompositeArea_AntiSymm_ZSymm)
-            q=oThisCompositeArea_AntiSymm_ZSymm.Iyz_hat;
         end
 
         function oArea_vec_half=get_oArea_vec(oThisCompositeArea_AntiSymm_ZSymm)

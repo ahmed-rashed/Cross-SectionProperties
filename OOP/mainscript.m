@@ -23,11 +23,10 @@ z_hat_vec=z_vec+r3;
 
 %Full section
 oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec)
-y_bar_error=oSec1.y_bar-r2
-z_bar_error=oSec1.z_bar-r3
+y_bar_error=oSec1.get_y_bar-r2
+z_bar_error=oSec1.get_z_bar-r3
 
-oA=cArea(oSec1)
-oA_Rotated=oA.rotatedArea(pi/2)
+oA_Rotated=oSec1.rotatedArea(pi/2)
 
 %Z Symmetry
 iindex=[1,2,4,5,6];
@@ -36,8 +35,8 @@ y_vec_half=y_vec(iindex);
 z_hat_vec_half=z_hat_vec(iindex);
 oSec2=cCompositeArea_ZSymm(oArea_vec_half,y_vec_half,z_hat_vec_half)
 oSec2.A-oSec1.A
-%oSec2.y_bar-oSec1.y_bar
-oSec2.z_bar-oSec1.z_bar
+%oSec2.get_y_bar-oSec1.get_y_bar
+oSec2.get_z_bar-oSec1.get_z_bar
 % oSec2.Iy_hat-oSec1.Iy_hat
 % oSec2.Iz_hat-oSec1.Iz_hat
 % oSec2.Iyz_hat-oSec1.Iyz_hat
@@ -58,8 +57,8 @@ y_hat_vec_half=y_hat_vec(iindex);
 z_vec_half=z_vec(iindex);
 oSec3=cCompositeArea_YSymm(oArea_vec_half,y_hat_vec_half,z_vec_half)
 oSec3.A-oSec1.A
-oSec3.y_bar-oSec1.y_bar
-% oSec3.z_bar-oSec1.z_bar
+oSec3.get_y_bar-oSec1.get_y_bar
+% oSec3.get_z_bar-oSec1.get_z_bar
 % oSec3.Iy_hat-oSec1.Iy_hat
 % oSec3.Iz_hat-oSec1.Iz_hat
 % oSec3.Iyz_hat-oSec1.Iyz_hat
@@ -80,8 +79,8 @@ y_vec_half=y_vec(iindex);
 z_vec_half=z_vec(iindex);
 oSec4=cCompositeArea_YZSymm(oArea_vec_half,y_vec_half,z_vec_half)
 oSec4.A-oSec1.A
-% oSec4.y_bar-oSec1.y_bar
-% oSec4.z_bar-oSec1.z_bar
+% oSec4.get_y_bar-oSec1.get_y_bar
+% oSec4.get_z_bar-oSec1.get_z_bar
 % oSec4.Iy_hat-oSec1.Iy_hat
 % oSec4.Iz_hat-oSec1.Iz_hat
 % oSec4.Iyz_hat-oSec1.Iyz_hat

@@ -4,24 +4,6 @@ classdef cCompositeArea_YSymm < cCompositeArea
     properties (Access = private)
         ind_vec
     end
-
-    methods(Static)
-        function d=Qy(~)
-            d=0;
-        end
-        
-        function f=z_bar(~)
-            f=0;
-        end
-
-        function m=Iyz_hat(~)
-            m=0;
-        end
-        
-        function q=Iyz(~)
-            q=0;
-        end
-    end
     
     methods
         % Subclass constructor
@@ -47,6 +29,9 @@ classdef cCompositeArea_YSymm < cCompositeArea
             
             %Construct the super class
             oThisCompositeArea_YSymm@cCompositeArea(superClass1Args{:});
+            oThisCompositeArea_YSymm.Iy=oThisCompositeArea_YSymm.Iy_hat;
+            oThisCompositeArea_YSymm.Iyz=0;
+            oThisCompositeArea_YSymm.z_bar=0;
 
             if nargin == 3
                 %Construct the sub class
@@ -54,13 +39,6 @@ classdef cCompositeArea_YSymm < cCompositeArea
             end
         end
 
-        function p=Iy(oThisCompositeArea_YSymm)
-            p=oThisCompositeArea_YSymm.Iy_hat;
-        end
-                
-        function l=I_p(oThisCompositeArea_YSymm)
-            l=oThisCompositeArea_YSymm.Iy+oThisCompositeArea_YSymm.Iz;
-        end
         function oArea_vec_half=get_oArea_vec(oThisCompositeArea_YSymm)
             %Divide the properties of super class non bisected elements by 2
             %oArea_vec_half=oThisCompositeArea_YSymm.oArea_vec;

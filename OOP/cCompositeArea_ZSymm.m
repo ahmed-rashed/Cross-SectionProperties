@@ -5,24 +5,6 @@ classdef cCompositeArea_ZSymm  < cCompositeArea
         ind_NonBisected_vec
     end
 
-    methods(Static)
-        function d=Qz(~)
-            d=0;
-        end
-
-        function f=y_bar(~)
-            f=0;
-        end
-
-        function m=Iyz_hat(~)
-            m=0;
-        end
-
-        function q=Iyz(~)
-            q=0;
-        end
-    end
-
     methods
         % Subclass constructor
         function oThisCompositeArea_ZSymm = cCompositeArea_ZSymm (oArea_vec_half,y_vec_half,z_hat_vec_half)
@@ -47,15 +29,14 @@ classdef cCompositeArea_ZSymm  < cCompositeArea
 
             %Construct the super class
             oThisCompositeArea_ZSymm@cCompositeArea(superClass1Args{:});
+            oThisCompositeArea_ZSymm.Iz=oThisCompositeArea_ZSymm.Iz_hat;
+            oThisCompositeArea_ZSymm.Iyz=0;
+            oThisCompositeArea_ZSymm.y_bar=0;
 
             if nargin == 3
                 %Construct the sub class
                 oThisCompositeArea_ZSymm.ind_NonBisected_vec=ind_NonBisected_vec;
             end
-        end
-
-        function p=Iz(oThisCompositeArea_ZSymm)
-            p=oThisCompositeArea_ZSymm.Iz_hat;
         end
 
         function oArea_vec_half=get_oArea_vec(oThisCompositeArea_ZSymm)
