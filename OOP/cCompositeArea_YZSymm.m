@@ -35,30 +35,39 @@ classdef cCompositeArea_YZSymm < cCompositeArea
     methods
         % Subclass constructor
         function oThisCompositeArea_YZSymm = cCompositeArea_YZSymm(oArea_vec_quarter,y_vec_quarter,z_vec_quarter)
-            if length(oArea_vec_quarter)~=length(y_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
-            if length(oArea_vec_quarter)~=length(z_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
+            if nargin==0
+                superClass1Args={};
+            elseif nargin == 3
+                if length(oArea_vec_quarter)~=length(y_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
+                if length(oArea_vec_quarter)~=length(z_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
 
-            %Determine the index of non bisected elements
-            ind_y_symm_vec=find((z_vec_quarter(:).'==0) & ([oArea_vec_quarter.Iyz]==0));
-            ind_z_symm_vec=find((y_vec_quarter(:).'==0) & ([oArea_vec_quarter.Iyz]==0));
-            
-            ind_y_symm_only_z_symm_only_vec=setxor(ind_y_symm_vec,ind_z_symm_vec);
-            ind_non_symm_vec=setdiff(setdiff(1:length(oArea_vec_quarter),ind_y_symm_vec),ind_z_symm_vec);
-            
-            oArea_vec_temp=oArea_vec_quarter;
-            for ii=ind_y_symm_only_z_symm_only_vec
-                oArea_vec_temp(ii)=cArea(2*oArea_vec_temp(ii).A,2*oArea_vec_temp(ii).Iy,2*oArea_vec_temp(ii).Iz,2*oArea_vec_temp(ii).Iyz);
-            end
-            for ii=ind_non_symm_vec
-                oArea_vec_temp(ii)=cArea(4*oArea_vec_temp(ii).A,4*oArea_vec_temp(ii).Iy,4*oArea_vec_temp(ii).Iz,4*oArea_vec_temp(ii).Iyz);
+                %Determine the index of non bisected elements
+                ind_y_symm_vec=find((z_vec_quarter(:).'==0) & ([oArea_vec_quarter.Iyz]==0));
+                ind_z_symm_vec=find((y_vec_quarter(:).'==0) & ([oArea_vec_quarter.Iyz]==0));
+
+                ind_y_symm_only_z_symm_only_vec=setxor(ind_y_symm_vec,ind_z_symm_vec);
+                ind_non_symm_vec=setdiff(setdiff(1:length(oArea_vec_quarter),ind_y_symm_vec),ind_z_symm_vec);
+
+                oArea_vec_temp=oArea_vec_quarter;
+                for ii=ind_y_symm_only_z_symm_only_vec
+                    oArea_vec_temp(ii)=cArea(2*oArea_vec_temp(ii).A,2*oArea_vec_temp(ii).Iy,2*oArea_vec_temp(ii).Iz,2*oArea_vec_temp(ii).Iyz);
+                end
+                for ii=ind_non_symm_vec
+                    oArea_vec_temp(ii)=cArea(4*oArea_vec_temp(ii).A,4*oArea_vec_temp(ii).Iy,4*oArea_vec_temp(ii).Iz,4*oArea_vec_temp(ii).Iyz);
+                end
+                superClass1Args={oArea_vec_temp,y_vec_quarter,z_vec_quarter};
+            else
+                error('This class can be constructed using zero or 3 inputs.');
             end
 
             %Construct the super class
-            oThisCompositeArea_YZSymm@cCompositeArea(oArea_vec_temp,y_vec_quarter,z_vec_quarter);
+            oThisCompositeArea_YZSymm@cCompositeArea(superClass1Args{:});
 
-            %Construct the sub class
-            oThisCompositeArea_YZSymm.ind_y_symm_only_z_symm_only_vec=ind_y_symm_only_z_symm_only_vec;
-            oThisCompositeArea_YZSymm.ind_non_symm_vec=ind_non_symm_vec;
+            if nargin == 3
+                %Construct the sub class
+                oThisCompositeArea_YZSymm.ind_y_symm_only_z_symm_only_vec=ind_y_symm_only_z_symm_only_vec;
+                oThisCompositeArea_YZSymm.ind_non_symm_vec=ind_non_symm_vec;
+            end
         end
 
         function p=Iy(oThisCompositeArea_YZSymm)

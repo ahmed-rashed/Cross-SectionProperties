@@ -26,23 +26,32 @@ classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
     methods
         % Subclass constructor
         function oThisCompositeArea_AntiSymm_ZSymm = cCompositeArea_AntiSymm_ZSymm(oArea_vec_half,y_vec_half,z_vec_half)
-            if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
-            if length(oArea_vec_half)~=length(z_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
+            if nargin==0
+                superClass1Args={};
+            elseif nargin == 3
+                if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
+                if length(oArea_vec_half)~=length(z_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
 
-            %Determine the index of non bisected elements
-            ind_vec=find(~(y_vec_half(:).'==0));
+                %Determine the index of non bisected elements
+                ind_vec=find(~(y_vec_half(:).'==0));
 
-            %Multiply the properties of non bisected elements by 2
-            oArea_vec_temp=oArea_vec_half;
-            for ii=ind_vec
-                oArea_vec_temp(ii)=cArea(2*oArea_vec_temp(ii).A,2*oArea_vec_temp(ii).Iy,2*oArea_vec_temp(ii).Iz,2*oArea_vec_temp(ii).Iyz);
+                %Multiply the properties of non bisected elements by 2
+                oArea_vec_temp=oArea_vec_half;
+                for ii=ind_vec
+                    oArea_vec_temp(ii)=cArea(2*oArea_vec_temp(ii).A,2*oArea_vec_temp(ii).Iy,2*oArea_vec_temp(ii).Iz,2*oArea_vec_temp(ii).Iyz);
+                end
+                superClass1Args={oArea_vec_temp,y_vec_half,z_vec_half};
+            else
+                error('This class can be constructed using zero or 3 inputs.');
             end
-            
-            %Construct the super class
-            oThisCompositeArea_AntiSymm_ZSymm@cCompositeArea(oArea_vec_temp,y_vec_half,z_vec_half);
 
-            %Construct the sub class
-            oThisCompositeArea_AntiSymm_ZSymm.ind_vec=ind_vec;
+            %Construct the super class
+            oThisCompositeArea_AntiSymm_ZSymm@cCompositeArea(superClass1Args{:});
+
+            if nargin == 3
+                %Construct the sub class
+                oThisCompositeArea_AntiSymm_ZSymm.ind_vec=ind_vec;
+            end
         end
 
         function p=Iz(oThisCompositeArea_AntiSymm_ZSymm)
