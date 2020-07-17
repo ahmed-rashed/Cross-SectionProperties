@@ -1,5 +1,5 @@
 clc
-clear all
+clear all %#ok<*CLALL>
 
 %% Example 1.6
 r1=randn;
@@ -25,8 +25,8 @@ y_hat_vec=y_vec+r1;
 z_hat_vec=z_vec+r2;
 
 %Full section
-oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec)
-y_bar_error=oSec1.get_y_bar-r1
+oSec1=cCompositeArea(oA_vec,y_hat_vec,z_hat_vec) %#ok<*NOPTS>
+y_bar_error=oSec1.get_y_bar-r1 %#ok<*NASGU>
 z_bar_error=oSec1.get_z_bar-r2
 
 %AntiSymm_ZSymm

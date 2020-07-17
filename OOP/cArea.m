@@ -3,76 +3,121 @@ classdef cArea
     
     % The attributes used to calcute the area properties
     properties
-        A(1,1);
-        Iy(1,1);
-        Iz(1,1);
-        Iyz(1,1);
+        A(1,1)
+        Iy(1,1)=0
+        Iz(1,1)=0
+        Iyz(1,1)=0
     end
     
     methods 
         % Constructor
-        function oThisArea = cArea(A,Iy,Iz,Iyz)
+        function oThisArea_arr = cArea(A_arr,Iy_arr,Iz_arr,Iyz_arr)
+            if nargin>=1
+                N=numel(A_arr);
+                A_arr_size=size(A_arr);
+                dims_c=num2cell(A_arr_size);
+                oThisArea_arr(dims_c{:})=oThisArea_arr;
+                for n=1:N
+                    oThisArea_arr(n).A=A_arr(n);
+                end
+            end
+            
+            if nargin>=2
+                if any(size(Iy_arr)~=A_arr_size),error('Iy_arr and A_arr must have identical size.'),end
+                for n=1:N
+                    oThisArea_arr(n).Iy=Iy_arr(n); %#ok<AGROW>
+                end
+            end
+            
+            if nargin>=3
+                if any(size(Iz_arr)~=A_arr_size),error('Iz_arr and A_arr must have identical size.'),end
+                for n=1:N
+                    oThisArea_arr(n).Iz=Iz_arr(n); %#ok<AGROW>
+                end
+            end
+            
             if nargin==4
-                oThisArea.A=A;
-                oThisArea.Iy=Iy;
-                oThisArea.Iz=Iz;
-                oThisArea.Iyz=Iyz;
-            elseif nargin ~= 0
-                error('This class can be constructed using zero or 4 inputs.');
+                if any(size(Iyz_arr)~=A_arr_size),error('Iyz_arr and A_arr must have identical size.'),end
+                for n=1:N
+                    oThisArea_arr(n).Iyz=Iyz_arr(n); %#ok<AGROW>
+                end
+            end
+            
+            if nargin > 4
+                error('This class cannot accept more than 4 inputs.');
             end
         end
 
-        function I_p=I_p(oThisArea)
-            I_p=oThisArea.Iy+oThisArea.Iz;
+        function I_p_arr=I_p(oThisArea_arr)
+            I_p_arr=reshape([oThisArea_arr.Iy]+[oThisArea_arr.Iz],size(oThisArea_arr));
         end
         
-        function alpha_1=alpha_1(oThisArea)
-            alpha_1=atan2(-oThisArea.Iyz,(oThisArea.Iy-oThisArea.Iz)/2);
+        function alpha_1_arr=alpha_1(oThisArea_arr)
+            alpha_1_arr=reshape(atan2(-[oThisArea_arr.Iyz],([oThisArea_arr.Iy]-[oThisArea_arr.Iz])/2),size(oThisArea_arr));
         end
         
-        function I_34=I_34(oThisArea)
-            I_34=sqrt(((oThisArea.Iy-oThisArea.Iz)/2)^2+(-oThisArea.Iyz)^2);
+        function I_34_arr=I_34(oThisArea_arr)
+            I_34_arr=reshape(sqrt((([oThisArea_arr.Iy]-[oThisArea_arr.Iz])/2).^2+(-[oThisArea_arr.Iyz]).^2),size(oThisArea_arr));
         end
         
-        function I_3=I_3(oThisArea)
-            I_3=(oThisArea.Iy+oThisArea.Iz)/2;
+        function I_3_arr=I_3(oThisArea_arr)
+            I_3_arr=reshape(([oThisArea_arr.Iy]+[oThisArea_arr.Iz])/2,size(oThisArea_arr));
         end
         
-        function I_4=I_4(oThisArea)
-            I_4=oThisArea.I_3;
+        function I_4_arr=I_4(oThisArea_arr)
+            I_4_arr=oThisArea_arr.I_3;
         end
         
-        function I_1=I_1(oThisArea)
-            I_1=oThisArea.I_3+oThisArea.I_34;
+        function I_1_arr=I_1(oThisArea_arr)
+            I_1_arr=oThisArea_arr.I_3+oThisArea_arr.I_34;
         end
         
-        function I_2=I_2(oThisArea)
-            I_2=oThisArea.I_3-oThisArea.I_34;
+        function I_2_arr=I_2(oThisArea_arr)
+            I_2_arr=oThisArea_arr.I_3-oThisArea_arr.I_34;
         end
         
-        function alpha_3=alpha_3(oThisArea)
-            alpha_3=pi/4-oThisArea.alpha_1;
+        function alpha_3_arr=alpha_3(oThisArea_arr)
+            alpha_3_arr=pi/4-oThisArea_arr.alpha_1;
         end
         
-        function rho_y=rho_y(oThisArea)
-            rho_y=sqrt(oThisArea.Iy/oThisArea.A);
+        function rho_y_arr=rho_y(oThisArea_arr)
+            rho_y_arr=reshape(sqrt([oThisArea_arr.Iy]./[oThisArea_arr.A]),size(oThisArea_arr));
         end
         
-        function rho_z=rho_z(oThisArea)
-            rho_z=sqrt(oThisArea.Iz/oThisArea.A);
+        function rho_z_arr=rho_z(oThisArea_arr)
+            rho_z_arr=reshape(sqrt([oThisArea_arr.Iz]./[oThisArea_arr.A]),size(oThisArea_arr));
         end
 
-        function Sy=Sy(oThisArea,z_max)
-            Sy=oThisArea.Iy/abs(z_max);
+        function Sy_arr=Sy(oThisArea_arr,z_max_arr)
+            if ~isscalar(z_max_arr) && any(size(oThisArea_arr)~=size(z_max_arr))
+                error('z_max_arr must have the same size as oThisArea_arr, or be a scalar')
+            end
+            Sy_arr=reshape([oThisArea_arr.Iy]./abs(z_max_arr),size(oThisArea_arr));
         end
 
-        function Sz=Sz(oThisArea,y_max)
-            Sz=oThisArea.Iz/abs(y_max);
+        function Sz_arr=Sz(oThisArea_arr,y_max_arr)
+            if ~isscalar(y_max_arr) && any(size(oThisArea_arr)~=size(y_max_arr))
+                error('y_max_arr must have the same size as oThisArea_arr, or be a scalar')
+            end
+            Sz_arr=reshape([oThisArea_arr.Iz]./abs(y_max_arr),size(oThisArea_arr));
         end
         
-        function oNewArea=rotatedArea(oThisArea,alpha_rad)
-            temp_col=TransMatrix(-alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
-            oNewArea=cArea(oThisArea.A,temp_col(1),temp_col(2),temp_col(3));
+        function oNewArea_arr=rotatedArea(oThisArea_arr,alpha_rad_arr)
+            if ~isscalar(alpha_rad_arr) && any(size(oThisArea_arr)~=size(alpha_rad_arr))
+                error('alpha_rad_arr must have the same size as oThisArea_arr, or be a scalar')
+            end
+
+            if isscalar(alpha_rad_arr)
+                temp_cols=TransMatrix(-alpha_rad_arr)*[[oThisArea_arr.Iy];[oThisArea_arr.Iz];-[oThisArea_arr.Iyz]];
+                oNewArea_arr=cArea([oThisArea_arr.A],temp_cols(1,:),temp_cols(2,:),temp_cols(3,:));
+            else
+                dims_c=num2cell(size(oThisArea_arr));
+                oNewArea_arr(dims_c{:})=cArea;
+                for n=1:numel(oNewArea_arr)
+                    temp_col=TransMatrix(-alpha_rad_arr(n))*[oThisArea_arr(n).Iy;oThisArea_arr(n).Iz;-oThisArea_arr(n).Iyz];
+                    oNewArea_arr(n)=cArea(oThisArea_arr(n).A,temp_col(1),temp_col(2),temp_col(3));
+                end
+            end
         end
     end
 end
