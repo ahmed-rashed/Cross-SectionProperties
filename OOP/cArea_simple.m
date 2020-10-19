@@ -9,7 +9,7 @@ classdef cArea_simple
         Iyz=0
     end
     
-    methods 
+    methods
         % Constructor
         function oThisArea = cArea_simple(A,Iy,Iz,Iyz)
             if nargin>=1
@@ -26,10 +26,6 @@ classdef cArea_simple
             
             if nargin==4
                 oThisArea.Iyz=Iyz;
-            end
-            
-            if nargin > 4
-                error('This class cannot accept more than 4 inputs.');
             end
         end
 
@@ -83,7 +79,7 @@ classdef cArea_simple
         
         function oNewArea=rotatedArea(oThisArea,alpha_rad)
             temp_col=TransMatrix(-alpha_rad)*[oThisArea.Iy;oThisArea.Iz;-oThisArea.Iyz];
-            oNewArea=cArea(oThisArea.A,temp_col(1),temp_col(2),temp_col(3));
+            oNewArea=cArea_simple(oThisArea.A,temp_col(1),temp_col(2),temp_col(3));
         end
     end
 end
