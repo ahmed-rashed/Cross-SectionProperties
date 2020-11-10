@@ -1,4 +1,4 @@
-classdef cArea_simple
+classdef cArea_simple	%The file-name must be the same as the class-name
     %This class takes the propeties of an area (A,Iy,Iz,Iyz), and calculates the properties of this area.
     
     % The attributes used to calcute the area properties
@@ -11,7 +11,7 @@ classdef cArea_simple
     
     methods
         % Constructor
-        function oThisArea = cArea_simple(A,Iy,Iz,Iyz)
+        function oThisArea=cArea_simple(A,Iy,Iz,Iyz)
             if nargin>=1
                 oThisArea.A=A;
             end
@@ -29,12 +29,12 @@ classdef cArea_simple
             end
         end
 
-        function I_p=I_p(oThisArea)
-            I_p=oThisArea.Iy+oThisArea.Iz;
+        function Ip=Ip(oThisArea)
+            Ip=oThisArea.Iy+oThisArea.Iz;
         end
         
-        function alpha_1=alpha_1(oThisArea)
-            alpha_1=atan2(-oThisArea.Iyz,(oThisArea.Iy-oThisArea.Iz)/2);
+        function alpha1=alpha1(oThisArea)
+            alpha1=atan2(-oThisArea.Iyz,(oThisArea.Iy-oThisArea.Iz)/2);
         end
         
         function I_34=I_34(oThisArea)
@@ -49,16 +49,16 @@ classdef cArea_simple
             I_4=oThisArea.I_3;
         end
         
-        function I_1=I_1(oThisArea)
-            I_1=oThisArea.I_3+oThisArea.I_34;
+        function I1=I1(oThisArea)
+            I1=oThisArea.I_3+oThisArea.I_34;
         end
         
-        function I_2=I_2(oThisArea)
-            I_2=oThisArea.I_3-oThisArea.I_34;
+        function I2=I2(oThisArea)
+            I2=oThisArea.I_3-oThisArea.I_34;
         end
         
         function alpha_3=alpha_3(oThisArea)
-            alpha_3=pi/4-oThisArea.alpha_1;
+            alpha_3=pi/4-oThisArea.alpha1;
         end
         
         function rho_y=rho_y(oThisArea)

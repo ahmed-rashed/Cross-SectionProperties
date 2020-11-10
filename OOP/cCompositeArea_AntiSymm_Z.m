@@ -1,15 +1,15 @@
-classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
+classdef cCompositeArea_AntiSymm_Z < cCompositeArea
     %This class takes only the right or left half of composite area data
 
-    properties (Access = private)
+    properties (Access=private)
 		ind_vec
     end
     
     methods
         % Subclass constructor
-        function oThisCompositeArea_AntiSymm_ZSymm = cCompositeArea_AntiSymm_ZSymm(oArea_vec_half,y_vec_half,z_vec_half)
+        function oThisCompositeArea_AntiSymm_ZSymm=cCompositeArea_AntiSymm_Z(oArea_vec_half,y_vec_half,z_vec_half)
             if nargin==0
-                superClass1Args={};
+                superClassArgs={};
             elseif nargin == 3
                 if length(oArea_vec_half)~=length(y_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
                 if length(oArea_vec_half)~=length(z_vec_half),error('oArea_vec_half,  y_vec_half and z_vec_half must have the same lengths'),end
@@ -22,13 +22,13 @@ classdef cCompositeArea_AntiSymm_ZSymm < cCompositeArea
                 for ii=ind_vec
                     oArea_vec_temp(ii)=cArea(2*oArea_vec_temp(ii).A,2*oArea_vec_temp(ii).Iy,2*oArea_vec_temp(ii).Iz,2*oArea_vec_temp(ii).Iyz);
                 end
-                superClass1Args={oArea_vec_temp,y_vec_half,z_vec_half};
+                superClassArgs={oArea_vec_temp,y_vec_half,z_vec_half};
             else
                 error('This class can be constructed using zero or 3 inputs.');
             end
 
             %Construct the super class
-            oThisCompositeArea_AntiSymm_ZSymm@cCompositeArea(superClass1Args{:});
+            oThisCompositeArea_AntiSymm_ZSymm@cCompositeArea(superClassArgs{:});
             oThisCompositeArea_AntiSymm_ZSymm.Iy=oThisCompositeArea_AntiSymm_ZSymm.Iy_hat;
             oThisCompositeArea_AntiSymm_ZSymm.Iz=oThisCompositeArea_AntiSymm_ZSymm.Iz_hat;
             oThisCompositeArea_AntiSymm_ZSymm.Iyz=oThisCompositeArea_AntiSymm_ZSymm.Iyz_hat;

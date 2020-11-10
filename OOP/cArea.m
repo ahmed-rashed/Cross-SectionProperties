@@ -1,4 +1,4 @@
-classdef cArea
+classdef cArea	%The file-name must be the same as the class-name
     %This class takes the propeties of an area (A,Iy,Iz,Iyz), and calculates the properties of this area.
     
     % The attributes used to calcute the area properties
@@ -11,7 +11,7 @@ classdef cArea
     
     methods 
         % Constructor
-        function oThisArea_arr = cArea(A_arr,Iy_arr,Iz_arr,Iyz_arr)
+        function oThisArea_arr=cArea(A_arr,Iy_arr,Iz_arr,Iyz_arr)
             if nargin>=1
                 N=numel(A_arr);
                 A_arr_size=size(A_arr);
@@ -42,18 +42,14 @@ classdef cArea
                     oThisArea_arr(n).Iyz=Iyz_arr(n); %#ok<AGROW>
                 end
             end
-            
-            if nargin > 4
-                error('This class cannot accept more than 4 inputs.');
-            end
         end
 
-        function I_p_arr=I_p(oThisArea_arr)
-            I_p_arr=reshape([oThisArea_arr.Iy]+[oThisArea_arr.Iz],size(oThisArea_arr));
+        function Ip_arr=Ip(oThisArea_arr)
+            Ip_arr=reshape([oThisArea_arr.Iy]+[oThisArea_arr.Iz],size(oThisArea_arr));
         end
         
-        function alpha_1_arr=alpha_1(oThisArea_arr)
-            alpha_1_arr=reshape(atan2(-[oThisArea_arr.Iyz],([oThisArea_arr.Iy]-[oThisArea_arr.Iz])/2),size(oThisArea_arr));
+        function alpha1_arr=alpha1(oThisArea_arr)
+            alpha1_arr=reshape(atan2(-[oThisArea_arr.Iyz],([oThisArea_arr.Iy]-[oThisArea_arr.Iz])/2),size(oThisArea_arr));
         end
         
         function I_34_arr=I_34(oThisArea_arr)
@@ -68,16 +64,16 @@ classdef cArea
             I_4_arr=oThisArea_arr.I_3;
         end
         
-        function I_1_arr=I_1(oThisArea_arr)
-            I_1_arr=oThisArea_arr.I_3+oThisArea_arr.I_34;
+        function I1_arr=I1(oThisArea_arr)
+            I1_arr=oThisArea_arr.I_3+oThisArea_arr.I_34;
         end
         
-        function I_2_arr=I_2(oThisArea_arr)
-            I_2_arr=oThisArea_arr.I_3-oThisArea_arr.I_34;
+        function I2_arr=I2(oThisArea_arr)
+            I2_arr=oThisArea_arr.I_3-oThisArea_arr.I_34;
         end
         
         function alpha_3_arr=alpha_3(oThisArea_arr)
-            alpha_3_arr=pi/4-oThisArea_arr.alpha_1;
+            alpha_3_arr=pi/4-oThisArea_arr.alpha1;
         end
         
         function rho_y_arr=rho_y(oThisArea_arr)
@@ -107,11 +103,12 @@ classdef cArea
                 error('alpha_rad_arr must have the same size as oThisArea_arr, or be a scalar')
             end
 
+            oThisArea_arr_size=size(oThisArea_arr);
+            dims_c=num2cell(oThisArea_arr_size);
             if isscalar(alpha_rad_arr)
                 temp_cols=TransMatrix(-alpha_rad_arr)*[[oThisArea_arr.Iy];[oThisArea_arr.Iz];-[oThisArea_arr.Iyz]];
-                oNewArea_arr=cArea([oThisArea_arr.A],temp_cols(1,:),temp_cols(2,:),temp_cols(3,:));
+                oNewArea_arr=reshape(cArea([oThisArea_arr.A],temp_cols(1,:),temp_cols(2,:),temp_cols(3,:)),oThisArea_arr_size);
             else
-                dims_c=num2cell(size(oThisArea_arr));
                 oNewArea_arr(dims_c{:})=cArea;
                 for n=1:numel(oNewArea_arr)
                     temp_col=TransMatrix(-alpha_rad_arr(n))*[oThisArea_arr(n).Iy;oThisArea_arr(n).Iz;-oThisArea_arr(n).Iyz];

@@ -1,16 +1,16 @@
-classdef cCompositeArea_YZSymm < cCompositeArea
+classdef cCompositeArea_Symm_YZ < cCompositeArea
     %This class takes only quarter the composite area
     
-    properties (Access = private)
+    properties (Access=private)
         ind_y_symm_only_z_symm_only_vec
         ind_non_symm_vec
     end
 
     methods
         % Subclass constructor
-        function oThisCompositeArea_YZSymm = cCompositeArea_YZSymm(oArea_vec_quarter,y_vec_quarter,z_vec_quarter)
+        function oThisCompositeArea_YZSymm=cCompositeArea_Symm_YZ(oArea_vec_quarter,y_vec_quarter,z_vec_quarter)
             if nargin==0
-                superClass1Args={};
+                superClassArgs={};
             elseif nargin == 3
                 if length(oArea_vec_quarter)~=length(y_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
                 if length(oArea_vec_quarter)~=length(z_vec_quarter),error('oArea_vec_quarter, y_vec_quarter and z_vec_quarter must have the same lengths'),end
@@ -29,13 +29,13 @@ classdef cCompositeArea_YZSymm < cCompositeArea
                 for ii=ind_non_symm_vec
                     oArea_vec_temp(ii)=cArea(4*oArea_vec_temp(ii).A,4*oArea_vec_temp(ii).Iy,4*oArea_vec_temp(ii).Iz,4*oArea_vec_temp(ii).Iyz);
                 end
-                superClass1Args={oArea_vec_temp,y_vec_quarter,z_vec_quarter};
+                superClassArgs={oArea_vec_temp,y_vec_quarter,z_vec_quarter};
             else
                 error('This class can be constructed using zero or 3 inputs.');
             end
 
             %Construct the super class
-            oThisCompositeArea_YZSymm@cCompositeArea(superClass1Args{:});
+            oThisCompositeArea_YZSymm@cCompositeArea(superClassArgs{:});
             oThisCompositeArea_YZSymm.Iy=oThisCompositeArea_YZSymm.Iy_hat;
             oThisCompositeArea_YZSymm.Iz=oThisCompositeArea_YZSymm.Iz_hat;
             oThisCompositeArea_YZSymm.Iyz=0;

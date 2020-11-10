@@ -1,18 +1,21 @@
 classdef cCompositeArea < cArea
 
-    properties (Access = protected)
+    properties
+        y_bar(1,1)
+        z_bar(1,1)
+    end
+    
+    properties (Access=protected)
         oArea_vec(1,:) cArea   %row vector
         y_hat_vec(1,:)         %row vector
         z_hat_vec(1,:)         %row vector
-        y_bar(1,1)
-        z_bar(1,1)
     end
     
     methods
         % Constructor
         function oThisCompositeArea=cCompositeArea(oArea_vec,y_hat_vec,z_hat_vec)
             if nargin==0
-                superClass1Args={};
+                superClassArgs={};
             elseif nargin == 3
                 if length(oArea_vec)~=length(y_hat_vec),error('oArea_vec and y_hat_vec must have the same lengths'),end
                 if length(oArea_vec)~=length(z_hat_vec),error('C_Area_vec and z_hat_vec must have the same lengths'),end
@@ -28,13 +31,13 @@ classdef cCompositeArea < cArea
                 Iy=Iy_hat-A*z_bar.^2;
                 Iz=Iz_hat-A*y_bar.^2;
                 Iyz=Iyz_hat-A*y_bar*z_bar;
-                superClass1Args={A,Iy,Iz,Iyz};
+                superClassArgs={A,Iy,Iz,Iyz};
             else
                 error('This class can be constructed using zero or 3 inputs.');
             end
-            
+
             %Construct the super class
-            oThisCompositeArea@cArea(superClass1Args{:});
+            oThisCompositeArea@cArea(superClassArgs{:});
             
             %Construct the sub class
             oThisCompositeArea.oArea_vec=oArea_vec;
@@ -84,8 +87,8 @@ classdef cCompositeArea < cArea
             Iyz_hat=oThisCompositeArea.Iyz+oThisCompositeArea.A*oThisCompositeArea.y_bar*oThisCompositeArea.z_bar;
         end
         
-        function I_p_hat=I_p_hat(oThisCompositeArea)
-            I_p_hat=oThisCompositeArea.Iy_hat+oThisCompositeArea.Iz_hat;
+        function Ip_hat=Ip_hat(oThisCompositeArea)
+            Ip_hat=oThisCompositeArea.Iy_hat+oThisCompositeArea.Iz_hat;
         end
-    end    
+    end
 end
